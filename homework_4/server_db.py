@@ -11,8 +11,8 @@ Base = declarative_base()
 
 
 class ServerStorage:
-    def __init__(self, path):
-        self.database_engine = create_engine(f'sqlite:///{path}',
+    def __init__(self):
+        self.database_engine = create_engine(SERVER_DB,
                                              echo=False,
                                              pool_recycle=7200,
                                              connect_args={'check_same_thread': False})
@@ -76,6 +76,38 @@ class ServerStorage:
         def __repr__(self):
             return f'{self.name} {self.date_time} {self.ip} {self.port}'
 
+    class UserContacts(Base):
+        __tablename__ = 'contacts'
+        id = Column(Integer, primary_key=True)
+        user = Column(String, ForeignKey('users.id'))
+        contact = Column(String, ForeignKey('users.id'))
+
+        def __init__(self, user, contact):
+            self.id = None
+            self.user = user
+            self.contact = contact
+            super().__init__()
+
+        def __repr__(self):
+            return f'{self.user} {self.contact}'
+
+    class UserHistory(Base):
+        __tablename__ = 'history'
+        id = Column(Integer, primary_key=True)
+        user = Column(String, ForeignKey('users.id'))
+        sent = Column(Integer)
+        Accepted = Column(Integer)
+
+        def __init__(self, user):
+            self.id = None
+            self.user = user
+            self.sent = 0
+            self.accepted = 0
+            super().__init__()
+
+        def __repr__(self):
+            return f'{self.user} {self.sent} {self.accepted}'
+
     def user_login(self, username, ip_address, port):
         print(username, ip_address, port)
         rez = self.session.query(self.AllUsers).filter_by(username=username)
@@ -101,6 +133,37 @@ class ServerStorage:
         self.session.query(self.ActiveUsers).filter_by(user=user.id).delete()
         self.session.commit()
 
+    def process_message(self, sender, recipient):
+        sender = self.session.query(self.AllUsers).filter_by(username=sender).first().id
+        recipient = self.session.query(self.AllUsers).filter_by(username=recipient).first().id
+        sender_row = self.session.query(self.UserHistory).filter_by(name=sender).first()
+        sender_row += 1
+        recipient_row = self.session.query(self.UserHistory).filter_by(user=recipient).first()
+        recipient_row += 1
+        self.session.commit()
+
+    def add_contact(self, user, contact):
+        user = self.session.query(self.AllUsers).filter_by(username=user).first()
+        contact = self.session.query(self.UserHistory).filter_by(contact=contact).first()
+
+        if not contact or self.session.query(self.UserContacts).filter_by(user=user.id, contact=contact.id).count():
+            return
+
+        contact_row = self.UserContacts(user.id, contact.id)
+        self.session.add(contact_row)
+        self.session.commit()
+
+    def remove_contact(self, user, contact):
+        user = self.session.query(self.AllUsers).filter_by(username=user).first()
+        contact = self.session.query(self.AllUsers).filter_by(contact=contact).first()
+
+        if not contact:
+            return
+
+        self.session.query(self.UserContacts).filter(
+            self.UserContacts.user == user.id, self.UserContacts.contact == contact.id).delete()
+        self.session.commit()
+
     def users_list(self):
         query = self.session.query(self.AllUsers.username, self.AllUsers.last_login)
         return query.all()
@@ -122,6 +185,21 @@ class ServerStorage:
         if username:
             query = query.filter(self.AllUsers.username == username)
 
+        return query.all()
+
+    def get_contacts(self, username):
+        user = self.session.query(self.AllUsers).filter_by(username=username).one()
+        query = self.session.query(self.UserContacts, self.AllUsers.username).\
+            filter_by(user=user.id).\
+            join(self.AllUsers, self.UserContacts.contact == self.AllUsers.id)
+        return [contact[1] for contact in query.all()]
+
+    def message_history(self):
+        query = self.session.query(
+            self.AllUsers.username,
+            self.AllUsers.last_login,
+            self.UserHistory.sent,
+            self.UserHistory.accepted).join(self.AllUsers)
         return query.all()
 
 
