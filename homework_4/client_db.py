@@ -12,7 +12,7 @@ class ClientDatabase:
         self.database_engine = create_engine(f'sqlite:///client_{name}.db3',
                                              echo=False,
                                              pool_recycle=7200,
-                                             connext_args={'check_same_thread': False})
+                                             connect_args={'check_same_thread': False})
         Base.metadata.create_all(self.database_engine)
         Session = sessionmaker(bind=self.database_engine)
         self.session = Session()
@@ -101,7 +101,7 @@ class ClientDatabase:
 
 
 if __name__ == '__main__':
-    test_db = ClientDataBase('test1')
+    test_db = ClientDatabase('test1')
     for i in ['test3', 'test4', 'test5']:
         test_db.add_contact(i)
 
