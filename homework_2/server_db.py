@@ -126,7 +126,7 @@ class ServerStorage:
 
 
 if __name__ == '__main__':
-    test_db = ServerStorage()
+    test_db = ServerStorage(SERVER_DB)
     test_db.user_login('client_1', '192.168.1.5', 8000)
     test_db.user_login('client_2', '192.168.1.6', 7777)
     print(test_db.active_users_list())

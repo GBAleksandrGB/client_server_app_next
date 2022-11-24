@@ -1,24 +1,18 @@
-"""Программа-лаунчер"""
-
 import subprocess
 
-PROCESSES = []
+process = []
 
 while True:
-    ACTION = input('Выберите действие: q - выход, '
-                   's - запустить сервер и клиенты, '
-                   'x - закрыть все окна: ')
-
-    if ACTION == 'q':
+    action = input('Выберите действие: q - выход , s - запустить сервер и клиенты, x - закрыть все окна:')
+    if action == 'q':
         break
-    elif ACTION == 's':
-        PROCESSES.append(subprocess.Popen('python server.py',
-                                          creationflags=subprocess.CREATE_NEW_CONSOLE))
-        PROCESSES.append(subprocess.Popen('python client.py -n test1',
-                                          creationflags=subprocess.CREATE_NEW_CONSOLE))
-        PROCESSES.append(subprocess.Popen('python client.py -n test2',
-                                          creationflags=subprocess.CREATE_NEW_CONSOLE))
-    elif ACTION == 'x':
-        while PROCESSES:
-            VICTIM = PROCESSES.pop()
-            VICTIM.kill()
+    elif action == 's':
+        clients_count = int(input('Введите количество тестовых клиентов для запуска: '))
+        # Запускаем сервер!
+        process.append(subprocess.Popen('python server.py', creationflags=subprocess.CREATE_NEW_CONSOLE))
+        # Запускаем клиентов:
+        for i in range(clients_count):
+            process.append(subprocess.Popen(f'python client.py -n test{i + 1}', creationflags=subprocess.CREATE_NEW_CONSOLE))
+    elif action == 'x':
+        while process:
+            process.pop().kill()
