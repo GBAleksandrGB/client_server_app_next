@@ -1,7 +1,7 @@
 import sys
 import logging.handlers
 import os
-from homework_5.common.variables import LOGGING_LEVEL
+from ..common.variables import LOGGING_LEVEL
 
 server_formatter = logging.Formatter('%(asctime)s %(levelname)s %(filename)s %(message)s')
 
