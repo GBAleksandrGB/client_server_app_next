@@ -110,8 +110,7 @@ class ClientDatabase:
     def check_user(self, user):
         """Метод проверяющий существует ли пользователь."""
         if self.session.query(
-                self.KnownUsers).filter_by(
-            username=user).count():
+                self.KnownUsers).filter_by(username=user).count():
             return True
         else:
             return False
