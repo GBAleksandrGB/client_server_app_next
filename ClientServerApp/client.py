@@ -6,13 +6,13 @@ import sys
 from Crypto.PublicKey import RSA
 from PyQt5.QtWidgets import QApplication, QMessageBox
 
-from homework_6.client.database import ClientDatabase
-from homework_6.client.main_window import ClientMainWindow
-from homework_6.client.start_dialog import UserNameDialog
-from homework_6.client.transport import ClientTransport
-from homework_6.common.decos import log
-from homework_6.common.errors import ServerError
-from homework_6.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT
+from ClientServerApp.client.database import ClientDatabase
+from ClientServerApp.client.main_window import ClientMainWindow
+from ClientServerApp.client.start_dialog import UserNameDialog
+from ClientServerApp.client.transport import ClientTransport
+from ClientServerApp.common.decos import log
+from ClientServerApp.common.errors import ServerError
+from ClientServerApp.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT
 
 logger = logging.getLogger('client')
 

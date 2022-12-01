@@ -33,14 +33,14 @@ def login_required(func):
     списке авторизованных клиентов.
     За исключением передачи словаря-запроса
     на авторизацию. Если клиент не авторизован,
-    генерирует исключение TypeError
+    генерирует исключение TypeError.
     """
 
     def checker(*args, **kwargs):
         # проверяем, что первый аргумент - экземпляр MessageProcessor
         # Импортить необходимо тут, иначе ошибка рекурсивного импорта.
-        from homework_6.server.core import MessageProcessor
-        from homework_6.common.variables import ACTION, PRESENCE
+        from ClientServerApp.server.core import MessageProcessor
+        from ClientServerApp.common.variables import ACTION, PRESENCE
         if isinstance(args[0], MessageProcessor):
             found = False
             for arg in args:

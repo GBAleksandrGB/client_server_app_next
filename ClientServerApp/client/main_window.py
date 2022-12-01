@@ -1,17 +1,18 @@
-from PyQt5.QtWidgets import QMainWindow, qApp, QMessageBox
-from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor
-from PyQt5.QtCore import pyqtSlot, Qt
-from Crypto.Cipher import PKCS1_OAEP
-from Crypto.PublicKey import RSA
+import base64
 import json
 import logging
-import base64
 
-from homework_6.client.add_contact import AddContactDialog
-from homework_6.client.del_contact import DelContactDialog
-from homework_6.client.main_window_conv import Ui_MainClientWindow
-from homework_6.common.errors import ServerError
-from homework_6.common.variables import MESSAGE_TEXT, SENDER
+from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
+from PyQt5.QtCore import pyqtSlot, Qt
+from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor
+from PyQt5.QtWidgets import QMainWindow, qApp, QMessageBox
+
+from ClientServerApp.client.add_contact import AddContactDialog
+from ClientServerApp.client.del_contact import DelContactDialog
+from ClientServerApp.client.main_window_conv import Ui_MainClientWindow
+from ClientServerApp.common.errors import ServerError
+from ClientServerApp.common.variables import MESSAGE_TEXT, SENDER
 
 logger = logging.getLogger('client')
 
@@ -315,10 +316,10 @@ class ClientMainWindow(QMainWindow):
                 # Если есть, спрашиваем и желании открыть с ним чат и открываем
                 # при желании
                 if self.messages.question(
-                    self,
-                    'Новое сообщение',
-                    f'Получено новое сообщение от {sender}, открыть чат с ним?',
-                    QMessageBox.Yes,
+                        self,
+                        'Новое сообщение',
+                        f'Получено новое сообщение от {sender}, открыть чат с ним?',
+                        QMessageBox.Yes,
                         QMessageBox.No) == QMessageBox.Yes:
                     self.current_chat = sender
                     self.set_active_user()
@@ -326,11 +327,11 @@ class ClientMainWindow(QMainWindow):
                 print('NO')
                 # Раз нету,спрашиваем хотим ли добавить юзера в контакты.
                 if self.messages.question(
-                    self,
-                    'Новое сообщение',
-                    f'Получено новое сообщение от {sender}.\n Данного пользователя нет в вашем контакт-листе.\n '
-                    f'Добавить в контакты и открыть чат с ним?',
-                    QMessageBox.Yes,
+                        self,
+                        'Новое сообщение',
+                        f'Получено новое сообщение от {sender}.\n Данного пользователя нет в вашем контакт-листе.\n '
+                        f'Добавить в контакты и открыть чат с ним?',
+                        QMessageBox.Yes,
                         QMessageBox.No) == QMessageBox.Yes:
                     self.add_contact(sender)
                     self.current_chat = sender

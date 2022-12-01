@@ -132,4 +132,3 @@ class ClientDatabase:
                  history_row.direction,
                  history_row.message,
                  history_row.date) for history_row in query.all()]
-

@@ -7,10 +7,10 @@ import select
 import socket
 import threading
 
-from homework_6.common.decos import login_required
-from homework_6.common.descryptors import Port
-from homework_6.common.utils import send_message, get_message
-from homework_6.common.variables import MAX_CONNECTIONS, DESTINATION, SENDER, ACTION, PRESENCE, TIME, USER, \
+from ClientServerApp.common.decos import login_required
+from ClientServerApp.common.descryptors import Port
+from ClientServerApp.common.utils import send_message, get_message
+from ClientServerApp.common.variables import MAX_CONNECTIONS, DESTINATION, SENDER, ACTION, PRESENCE, TIME, USER, \
     MESSAGE_TEXT, RESPONSE_200, RESPONSE_400, ERROR, EXIT, ACCOUNT_NAME, GET_CONTACTS, RESPONSE_202, LIST_INFO, \
     ADD_CONTACT, REMOVE_CONTACT, USERS_REQUEST, PUBLIC_KEY_REQUEST, RESPONSE_511, DATA, RESPONSE, PUBLIC_KEY, \
     RESPONSE_205, MESSAGE
@@ -120,9 +120,7 @@ class MessageProcessor(threading.Thread):
         self.sock.listen(MAX_CONNECTIONS)
 
     def process_message(self, message):
-        """
-        Метод отправки сообщения клиенту.
-        """
+        """Метод отправки сообщения клиенту."""
         if message[DESTINATION] in self.names and self.names[message[DESTINATION]] in self.listen_sockets:
             try:
                 send_message(self.names[message[DESTINATION]], message)

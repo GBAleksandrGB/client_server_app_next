@@ -4,9 +4,7 @@ from PyQt5.QtWidgets import QDialog, QPushButton, QTableView
 
 
 class StatWindow(QDialog):
-    """
-    Класс - окно со статистикой пользователей
-    """
+    """Класс - окно со статистикой пользователей."""
 
     def __init__(self, database):
         super().__init__()

@@ -9,11 +9,11 @@ import time
 
 from PyQt5.QtCore import pyqtSignal, QObject
 
-from homework_6.common.errors import ServerError
-from homework_6.common.utils import get_message, send_message
-from homework_6.common.variables import ACTION, PRESENCE, TIME, USER, ACCOUNT_NAME, PUBLIC_KEY, RESPONSE, ERROR, DATA, \
-    RESPONSE_511, DESTINATION, MESSAGE, SENDER, MESSAGE_TEXT, GET_CONTACTS, LIST_INFO, PUBLIC_KEY_REQUEST, ADD_CONTACT, \
-    REMOVE_CONTACT, EXIT, USERS_REQUEST
+from ClientServerApp.common.errors import ServerError
+from ClientServerApp.common.utils import get_message, send_message
+from ClientServerApp.common.variables import ACTION, PRESENCE, TIME, USER, ACCOUNT_NAME, PUBLIC_KEY, RESPONSE, ERROR, \
+    DATA, RESPONSE_511, DESTINATION, MESSAGE, SENDER, MESSAGE_TEXT, GET_CONTACTS, LIST_INFO, PUBLIC_KEY_REQUEST, \
+    ADD_CONTACT, REMOVE_CONTACT, EXIT, USERS_REQUEST
 
 # Логер и объект блокировки для работы с сокетом.
 logger = logging.getLogger('client')

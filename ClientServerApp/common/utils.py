@@ -1,7 +1,7 @@
 import json
 
-from homework_6.common.decos import log
-from homework_6.common.variables import MAX_PACKAGE_LENGTH, ENCODING
+from ClientServerApp.common.decos import log
+from ClientServerApp.common.variables import MAX_PACKAGE_LENGTH, ENCODING
 
 
 @log

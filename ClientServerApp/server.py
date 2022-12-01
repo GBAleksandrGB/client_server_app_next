@@ -6,12 +6,12 @@ import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
-from homework_6.server.core import MessageProcessor
-from homework_6.server.database import ServerStorage
-from homework_6.server.main_window import MainWindow
 
-from homework_6.common.decos import log
-from homework_6.common.variables import DEFAULT_PORT
+from ClientServerApp.common.decos import log
+from ClientServerApp.common.variables import DEFAULT_PORT
+from ClientServerApp.server.core import MessageProcessor
+from ClientServerApp.server.database import ServerStorage
+from ClientServerApp.server.main_window import MainWindow
 
 logger = logging.getLogger('server')
 

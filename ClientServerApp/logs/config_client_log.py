@@ -2,7 +2,7 @@ import sys
 import os
 import logging
 
-from homework_6.common.variables import LOGGING_LEVEL
+from ClientServerApp.common.variables import LOGGING_LEVEL
 
 client_formatter = logging.Formatter('%(asctime)s %(levelname)s %(filename)s %(message)s')
 
